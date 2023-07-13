@@ -1,14 +1,13 @@
-#include "./Parse.hpp"
 #include "./Models.hpp"
-#include <unistd.h>
-#include <string>
+#include "./Parse.hpp"
 #include <iostream>
+#include <string>
+#include <unistd.h>
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   // Parse the command-line arguments.
   if (argc != 3) {
-    std::cout << "Usage: ./Main [file] [file]"
-              << std::endl;
+    std::cout << "Usage: ./Main [file] [file]" << std::endl;
     std::exit(1);
   }
 
@@ -21,5 +20,4 @@ int main(int argc, char** argv) {
   Models m;
   m.getDataFromParse(p.getOptions());
   m.generateModells();
-
 }

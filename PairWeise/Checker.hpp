@@ -1,13 +1,12 @@
 #ifndef CHECKER_H_
 #define CHECKER_H_
 
-#include <vector>
 #include <string>
 #include <utility>
+#include <vector>
 
 class Checker {
-    public:
-    private:
-
+public:
+private:
 };
-#endif  // CHECKER_H_
+#endif // CHECKER_H_
