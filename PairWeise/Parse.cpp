@@ -48,7 +48,7 @@ void Parse::PrettyPrinter() {
     std::ofstream MyFile1("a_Copy.options");
     for(unsigned int i = 0; i < options_.size(); i++)
     {   
-        if ((options_[i + 1] == "\n") && (i < (options_.size() - 1))) {
+        if ((options_[i + 1] == "\n") && (i < (options_.size() - 2))) {
             //std::cout << options_[i];
             MyFile1 << options_[i];
         } else if (options_[i] == "\n" || (i == options_.size() - 1)) {
@@ -65,7 +65,7 @@ void Parse::PrettyPrinter() {
     std::ofstream MyFile2("a_Copy.constraints");
     for(unsigned int i = 0; i < constraints_.size(); i++)
     {
-        if ((constraints_[i + 1] == "\n") && (i < (constraints_.size() - 1))) {
+        if ((constraints_[i + 1] == "\n") && (i < (constraints_.size() - 2))) {
             //std::cout << constraints_[i];
             MyFile2 << constraints_[i];
         } else if (constraints_[i] == "\n" || (i == constraints_.size() - 1)) {
