@@ -56,7 +56,13 @@ void Parse::PrettyPrinter() {
             MyFile1 << options_[i];
         } else {
             //std::cout << options_[i] << ",";
-            MyFile1 << options_[i] << ",";
+            if (options_[i + 1] == "\n" && i < (int)options_.size() - 2) {
+                MyFile1 << options_[i];
+            } else {
+                //std::cout << constraints_[i] << ",";
+                MyFile1 << options_[i] << ",";
+            }
+            
         }
     }
     //std::cout << std::endl;
@@ -74,8 +80,12 @@ void Parse::PrettyPrinter() {
             //std::cout << constraints_[i];
             MyFile2 << constraints_[i];
         } else {
-            //std::cout << constraints_[i] << ",";
-            MyFile2 << constraints_[i] << ",";
+            if (constraints_[i + 1] == "\n" && i < (int)constraints_.size() - 2) {
+                MyFile2 << constraints_[i];
+            } else {
+                //std::cout << constraints_[i] << ",";
+                MyFile2 << constraints_[i] << ",";
+            }
         }
     }
     //std::cout << std::endl;

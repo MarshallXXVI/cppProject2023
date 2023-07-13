@@ -10,6 +10,8 @@ LIBRARIES = -lncurses
 .SUFFIXES:
 .PHONY: all compile test valgrind checkstyle clean
 
+format: clang-format -i .cpp.hpp
+
 all: compile test checkstyle
 
 compile: $(MAIN_BINARIES) $(TEST_BINARIES)
