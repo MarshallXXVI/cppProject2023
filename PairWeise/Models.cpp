@@ -49,7 +49,7 @@ void Models::generateModells() {
     bildschirm_[k];
 
     while (i < (int)prozessor_.size() && j < (int)ram_.size() && k < (int)bildschirm_.size()) {
-        std::cout << thisModellToString(i, j, k) << std::endl;
+        // std::cout << thisModellToString(i, j, k) << std::endl;
         MyFile1 << thisModellToString(i, j, k) << '\n';
         if ((int)prozessor_.size() > 1) {
             if (i == (int)prozessor_.size() - 1 && k == (int)bildschirm_.size() - 1) {
