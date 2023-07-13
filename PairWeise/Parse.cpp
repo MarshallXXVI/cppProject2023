@@ -65,6 +65,7 @@ void Parse::PrettyPrinter() {
     std::ofstream MyFile2("a_Copy.constraints");
     for(unsigned int i = 0; i < constraints_.size(); i++)
     {
+        std::cout << constraints_[i];
         if ((constraints_[i + 1] == "\n") && (i < (constraints_.size() - 2))) {
             //std::cout << constraints_[i];
             MyFile2 << constraints_[i];
