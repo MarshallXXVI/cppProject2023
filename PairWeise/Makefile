@@ -4,13 +4,12 @@ MAIN_BINARIES = $(basename $(wildcard *Main.cpp))
 TEST_BINARIES = $(basename $(wildcard *Test.cpp))
 HEADERS = $(wildcard *.h)
 OBJECTS = $(addsuffix .o, $(basename $(filter-out %Main.cpp %Test.cpp, $(wildcard *.cpp))))
-LIBRARIES = -lncurses
 
 .PRECIOUS: %.o
 .SUFFIXES:
 .PHONY: all compile test valgrind checkstyle clean
 
-all: compile test run checkstyle
+all: compile checkstyle
 
 run:
 	./ProjectMain a.options a.constraints
