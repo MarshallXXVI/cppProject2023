@@ -9,7 +9,7 @@ OBJECTS = $(addsuffix .o, $(basename $(filter-out %Main.cpp %Test.cpp, $(wildcar
 .SUFFIXES:
 .PHONY: all compile test valgrind checkstyle clean
 
-all: compile checkstyle
+all: compile 
 
 run:
 	./ProjectMain a.options a.constraints
