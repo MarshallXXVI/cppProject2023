@@ -1,4 +1,4 @@
-#include "./Models.hpp"
+#include "./Solver.hpp"
 #include "./Parse.hpp"
 #include <iostream>
 #include <string>
@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
   Parse p;
   p.ReadDataFromFile(optionFile, constraintsFile);
   p.PrettyPrinter();
-  Models m;
-  m.getDataFromParse(p.getOptions());
-  m.generateModells();
+  Solver s;
+  s.getDataFromParse(p.getOptions());
+  s.generateModells();
 }

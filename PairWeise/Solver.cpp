@@ -1,9 +1,9 @@
-#include "./Models.hpp"
+#include "./Solver.hpp"
 #include <fstream>
 #include <iostream>
 
 // __________________________________________________________________
-void Models::getDataFromParse(std::vector<std::string> param) {
+void Solver::getDataFromParse(std::vector<std::string> param) {
   int i = 1;
   while (param[i] != "\n") {
     prozessor_.push_back(param[i]);
@@ -19,20 +19,10 @@ void Models::getDataFromParse(std::vector<std::string> param) {
     bildschirm_.push_back(param[i]);
     i++;
   }
-
-  // for (int i = 0; i < prozessor_.size(); i++) {
-  //     std::cout << prozessor_[i] << std::endl;
-  // }
-  // for (int i = 0; i < ram_.size(); i++) {
-  //     std::cout << ram_[i] << std::endl;
-  // }
-  // for (int i = 0; i < bildschirm_.size(); i++) {
-  //     std::cout << bildschirm_[i] << std::endl;
-  // }
 }
 
 // __________________________________________________________________
-std::string Models::thisModellToString(int i, int j, int k) {
+std::string Solver::thisModellToString(int i, int j, int k) {
   std::string word = "";
   word = "Prozessor," + prozessor_[i] + ",RAM," + ram_[j] + ",Bildschirm," +
          bildschirm_[k];
@@ -40,7 +30,7 @@ std::string Models::thisModellToString(int i, int j, int k) {
 }
 
 // __________________________________________________________________
-void Models::generateModells() {
+void Solver::generateModells() {
   std::ofstream MyFile1("a.models");
   int i = 0;
   int j = 0;

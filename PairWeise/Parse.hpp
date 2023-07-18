@@ -17,8 +17,7 @@ public:
   void PrettyPrinter();
   // getter function.
   std::vector<std::string> getOptions() { return options_; }
-
-  // self-explanatory membervariables.
+  std::vector<std::string> ReturnVectorOfWord(const std::string &filename);
 private:
   std::vector<std::string> options_;
   std::vector<std::string> constraints_;

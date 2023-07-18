@@ -1,12 +1,12 @@
-#ifndef MODELL_H_
-#define MODELL_H_
+#ifndef SOLVER_H_
+#define SOLVER_H_
 
 #include <string>
 #include <utility>
 #include <vector>
 
 // Models with pr. membervariables.
-class Models {
+class Solver {
   std::vector<std::string> prozessor_;
   std::vector<std::string> ram_;
   std::vector<std::string> bildschirm_;
@@ -22,4 +22,4 @@ private:
   // Name is program. Converting Modell to string.
   std::string thisModellToString(int i, int j, int k);
 };
-#endif // MODELL_H_
+#endif // SOLVER_H_
