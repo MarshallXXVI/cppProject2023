@@ -18,6 +18,7 @@ int main(int argc, char **argv) {
   p.ReadDataFromFile(optionFile, constraintsFile);
   p.PrettyPrinter();
   Solver s;
-  s.getDataFromParse(p.getOptions());
+  s.getDataFromOption(p.getOptions());
+  s.getDataFromConstraint(p.ReturnVectorOfWord(constraintsFile));
   s.generateModells();
 }

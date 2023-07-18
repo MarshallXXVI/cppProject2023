@@ -12,7 +12,7 @@ OBJECTS = $(addsuffix .o, $(basename $(filter-out %Main.cpp %Test.cpp, $(wildcar
 all: compile 
 
 run:
-	./ProjectMain a.options a.constraints
+	./solverMain a.options a.constraints
 
 format: 
 	clang-format -i *.cpp *.hpp

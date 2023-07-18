@@ -2,6 +2,9 @@
 #include <fstream>
 #include <iostream>
 
+/// if the input file is not sorted. case 1.
+/// sorted vector of int.
+
 // __________________________________________________________________
 void Parse::ReadDataFromFile(const std::string &filename1,
                              const std::string &filename2) {
