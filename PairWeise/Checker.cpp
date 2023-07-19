@@ -183,8 +183,25 @@ int Checker::ifCondition3Valid() {
 }
 
 // __________________________________________________________________
+int Checker::ifCondition4Valid() {
+    // to identify or clarify how can invalid input data look like.
+    // missing value or empty file.
+    // Condition4 maybe already handle by ifCondition1Valid().
+    // ifCondition1Valid() this function prove that each Model's Option
+    // must be full filled. if one of Option is missing it will throw std::cerr.
+    // this function will handle Option data if some of Option might not be provided.
+    // such as Prozessor or RAM or Bildschirm.
+    // this function also will handle Constraint data if some of value might not be provided.
+    // such as (Prozessor, ) or (RAM, ).
+    // always check that each Option follow with their valid value.
+    return 0;
+}
+
+// __________________________________________________________________
 void Checker::Check() {
-    if (ifCondition1Valid() == 0 && ifCondition2Valid() == 0 && ifCondition3Valid() == 0) {
+    if (ifCondition1Valid() == 0 && 
+        ifCondition2Valid() == 0 && 
+        ifCondition3Valid() == 0) {
         std::cout << "VERIFIED" << std::endl;
     } else {
         std::cout << "UNVERIFIED" << std::endl;

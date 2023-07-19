@@ -34,5 +34,7 @@ private:
     // In den Modellen und in den Constraint 
     // gibt es nur Optionen und Werte aus der .options Datei.
     int ifCondition3Valid();
+    // handle invalide Input Dateien.
+    int ifCondition4Valid();
 };
 #endif // CHECKER_H_
