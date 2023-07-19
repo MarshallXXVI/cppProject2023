@@ -1,5 +1,6 @@
 #include "./Solver.hpp"
 #include "./Parse.hpp"
+#include "./Checker.hpp"
 #include <iostream>
 #include <string>
 #include <unistd.h>
@@ -19,6 +20,9 @@ int main(int argc, char **argv) {
   p.PrettyPrinter();
   Solver s;
   s.getDataFromOption(p.getOptions());
-  s.getDataFromConstraint(p.ReturnVectorOfWord(constraintsFile));
+  s.getDataFromConstraint(p.getConstraints());
   s.generateModells();
+  Checker c;
+  c.readData(optionFile, constraintsFile, "a.models");
+  c.Check();
 }

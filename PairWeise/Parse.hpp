@@ -15,8 +15,11 @@ public:
   // Pretty printer, creating the two copy files for .options and
   // .constraints. a_Copy.coptions & a_Copy.constraints.
   void PrettyPrinter();
-  // getter function.
+  // getter function return field of options.
   std::vector<std::string> getOptions() { return options_; }
+  // getter function return field of constraints.
+  std::vector<std::string> getConstraints() { return constraints_; }
+  // return vector of string as word also include '\n' aka endOfLine.
   std::vector<std::string> ReturnVectorOfWord(const std::string &filename);
 private:
   std::vector<std::string> options_;
