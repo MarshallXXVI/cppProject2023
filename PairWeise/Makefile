@@ -14,6 +14,8 @@ all: compile
 run:
 	./solverMain a.options a.constraints
 
+checker:
+	./checkerMain a.options a.constraints a.models
 format: 
 	clang-format -i *.cpp *.hpp
 

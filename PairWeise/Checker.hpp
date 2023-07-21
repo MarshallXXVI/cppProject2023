@@ -17,14 +17,17 @@ class Checker {
     std::vector<model> models_;
 public:
     // read data from file.
-    void readData(const std::string &options,
-                  const std::string &constraints,
-                  const std::string &models);
+    void readDataInput(const std::string &options,
+                  const std::string &constraints);
+    void readDataModel(const std::string &models);
     // this function call all checker methods.
-    void Check();
+    bool ifModel();
+    bool ifOptionAndConstraints();
+    int errorCode_;
 private:
-    // setter of option field.
-    void setOption(std::vector<std::string> param);
+    std::vector<std::string> file1_;
+    std::vector<std::string> file2_;
+    std::vector<std::string> file3_;
     // setter of model field.
     void setModel(std::vector<std::string> param);
     // in jedem Model alle Optionen genau einmal angegeben werden.
@@ -35,6 +38,10 @@ private:
     // gibt es nur Optionen und Werte aus der .options Datei.
     int ifCondition3Valid();
     // handle invalide Input Dateien.
-    int ifCondition4Valid();
+    int ifOptionValid();
+    int ifConstraintValid();
+    // helper function;
+    bool andTheRest(int i);
+    void helperFunctionBuildData();
 };
 #endif // CHECKER_H_

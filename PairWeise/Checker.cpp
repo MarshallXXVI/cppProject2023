@@ -7,29 +7,28 @@
 #include <vector>
 
 // __________________________________________________________________
-void Checker::readData(const std::string &options,
-                  const std::string &constraints,
-                  const std::string &models) 
-                  {
+void Checker::readDataInput(const std::string &options,
+                  const std::string &constraints) {
     Parse p;
-    std::vector<std::string> file1 = p.ReturnVectorOfWord(options);
-    std::vector<std::string> file2 = p.ReturnVectorOfWord(constraints);
-    std::vector<std::string> file3 = p.ReturnVectorOfWord(models);
+    file1_ = p.ReturnVectorOfWord(options);
+    file2_ = p.ReturnVectorOfWord(constraints);               
+}
+
+// __________________________________________________________________
+void Checker::helperFunctionBuildData() {
     Solver s;
-    s.getDataFromOption(file1);
-    s.getDataFromConstraint(file2);
+    s.getDataFromOption(file1_);
+    s.getDataFromConstraint(file2_);
     constraints_ = s.getConstraint();
-    option_ = s.getOption();
-    setModel(file3);
-    // for (int i = 0; i < (int)models_.size(); i++) {
-    //     std::cout << models_[i].prozessor_;
-    // }
-    // for (int i = 0; i < (int)constraints_.size(); i++) {
-    //     std::cout << constraints_[i].prozessor_;
-    // }
-    // for (int i = 0; i < (int)file3.size(); i++) {
-    //     std::cout << file3[i];
-    // }
+    option_ = s.getOption(); 
+}
+
+// __________________________________________________________________
+void Checker::readDataModel(const std::string &models) {
+    helperFunctionBuildData();
+    Parse p;
+    file3_ = p.ReturnVectorOfWord(models);
+    setModel(file3_);
 }
 
 // __________________________________________________________________
@@ -79,14 +78,18 @@ int Checker::ifCondition1Valid() {
 
 // __________________________________________________________________
 int Checker::ifCondition2Valid() {
+    // check if constraint file empty.
+    if ((int)file2_.size() == 1 && file2_[0] == "") {
+        return 0;
+    }
     for (int i = 0; i < (int)models_.size(); i++) {
         for (int j = 0; j < (int)constraints_.size(); j++) {
             if ((models_[i].prozessor_ == constraints_[j].prozessor_ || constraints_[j].prozessor_ == "") && 
             (models_[i].ram_ == constraints_[j].ram_ || constraints_[j].ram_ == "") && 
             (models_[i].bildschirm_ == constraints_[j].bildschirm_ || constraints_[j].bildschirm_ == "")) {
                 std::cerr << "Prozessor: " << models_[i].prozessor_ << 
-                             "RAM: " << models_[i].ram_ <<
-                             "Bildschirm: " << models_[i].bildschirm_ << std::endl;
+                             ", RAM: " << models_[i].ram_ <<
+                             ", Bildschirm: " << models_[i].bildschirm_ << std::endl;
                 std::cerr << "Not compatible with Constraints" << std::endl;
                 return 30;
             }
@@ -183,28 +186,97 @@ int Checker::ifCondition3Valid() {
 }
 
 // __________________________________________________________________
-int Checker::ifCondition4Valid() {
-    // to identify or clarify how can invalid input data look like.
-    // missing value or empty file.
-    // Condition4 maybe already handle by ifCondition1Valid().
-    // ifCondition1Valid() this function prove that each Model's Option
-    // must be full filled. if one of Option is missing it will throw std::cerr.
-    // this function will handle Option data if some of Option might not be provided.
-    // such as Prozessor or RAM or Bildschirm.
-    // this function also will handle Constraint data if some of value might not be provided.
-    // such as (Prozessor, ) or (RAM, ).
-    // always check that each Option follow with their valid value.
+int Checker::ifOptionValid() {
+    //Check option file.
+    bool flag1 = false;
+    bool flag2 = false;
+    bool flag3 = false;
+    //Valid .option must be at least 6 elements.
+    //At least 3 value and 3 options.
+    if ((int)file1_.size() < 6) {
+        return 10;
+    }
+    for (int i = 0; i < (int)file1_.size() - 1; i++) {
+        if ((file1_[i] == "Prozessor") && (file1_[i + 1] != "")) {
+            flag1 = true;
+        }
+        if (file1_[i] == "RAM" && (file1_[i + 1] != "")) {
+            flag2 = true;
+        }
+        if (file1_[i] == "Bildschirm" && (file1_[i + 1] != "")) {
+            flag3 = true;
+        }
+    }
+    if (flag1 && flag2 && flag3) {
+        return 0;
+    }
+    return 10;
+}
+
+// __________________________________________________________________
+int Checker::ifConstraintValid() {
+    //Check if empty .constraints
+    if (file2_.size() == 1 && file2_[0] == "") {
+        return 0;
+    }
+    //must be at least pair of option and value.
+    //so size always must even number.
+    if (((int)file2_.size() % 2) != 0) {
+        return 20;
+    }
+    //Check for missing value.
+    for (int i = 0; i < (int)file2_.size() - 1; i++) {
+        if ((file2_[i] == "Prozessor") && andTheRest(i)) {
+            return 20;
+        }
+        if (file2_[i] == "RAM" && andTheRest(i)) {
+            return 20;
+        }
+        if (file2_[i] == "Bildschirm" && andTheRest(i)) {
+            return 20;
+        }
+    }
     return 0;
 }
 
 // __________________________________________________________________
-void Checker::Check() {
+bool Checker::andTheRest(int i) {
+    return (file2_[i + 1] == "RAM" || 
+            file2_[i + 1] == "Bildschirm" || 
+            file2_[i + 1] == "Prozessor" || 
+            file2_[i + 1] == "");
+}
+
+// __________________________________________________________________
+bool Checker::ifModel() {
     if (ifCondition1Valid() == 0 && 
         ifCondition2Valid() == 0 && 
         ifCondition3Valid() == 0) {
         std::cout << "VERIFIED" << std::endl;
+        return true;
     } else {
+        errorCode_ = 30;
         std::cout << "UNVERIFIED" << std::endl;
+        return false;
     }
+}
 
-} 
+// __________________________________________________________________
+bool Checker::ifOptionAndConstraints() {
+    if (ifConstraintValid() == 0 &&
+    ifOptionValid() == 0) {
+        return true;
+    } else {
+        if (ifOptionValid() != 0) {
+            std::cerr << "Not possible .options" << std::endl;
+            errorCode_ = ifOptionValid();
+        }
+        if (ifConstraintValid() != 0) {
+            std::cerr << "Not possible .constaints" << std::endl;
+            errorCode_ = ifConstraintValid();
+        }
+        return false;
+    }
+}
+
+
