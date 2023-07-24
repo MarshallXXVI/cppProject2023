@@ -16,19 +16,20 @@ int main(int argc, char **argv) {
   std::string optionFile = argv[1];
   std::string constraintsFile = argv[2];
   std::string modelsFile = argv[3];
-  c.readDataInput(optionFile, constraintsFile);
-  if (!c.ifOptionAndConstraints()) {
-    return c.errorCode_;
-  }
+  // c.readDataInput(optionFile, constraintsFile);
+  // if (!c.ifOptionAndConstraints()) {
+  //   return c.errorCode_;
+  // }
   Parse p;
   p.ReadDataFromFile(optionFile, constraintsFile);
   p.PrettyPrinter();
   Solver s;
   s.getDataFromOption(p.getOptions());
   s.getDataFromConstraint(p.getConstraints());
-  s.generateModells();
-  c.readDataModel(modelsFile);
-  if (!c.ifModel()) {
-    return c.errorCode_;
-  }
+  s.generatePair();
+  // s.generateModells();
+  // // c.readDataModel(modelsFile);
+  // // if (!c.ifModel()) {
+  // //   return c.errorCode_;
+  // // }
 }

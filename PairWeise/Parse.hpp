@@ -16,13 +16,13 @@ public:
   // .constraints. a_Copy.coptions & a_Copy.constraints.
   void PrettyPrinter();
   // getter function return field of options.
-  std::vector<std::string> getOptions() { return options_; }
+  std::vector<std::vector<std::string>> getOptions() { return options_; }
   // getter function return field of constraints.
-  std::vector<std::string> getConstraints() { return constraints_; }
+  std::vector<std::vector<std::string>> getConstraints() { return constraints_; }
   // return vector of string as word also include '\n' aka endOfLine.
   std::vector<std::string> ReturnVectorOfWord(const std::string &filename);
 private:
-  std::vector<std::string> options_;
-  std::vector<std::string> constraints_;
+  std::vector<std::vector<std::string>> options_;
+  std::vector<std::vector<std::string>> constraints_;
 };
 #endif // PARSE_H_

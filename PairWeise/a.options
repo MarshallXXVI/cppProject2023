@@ -1,3 +1,5 @@
 Prozessor,AMD,Intel
 RAM,5,6,7,8
 Bildschirm,2,4,6,8
+GPU,NVIDIA,RYZEN
+Mainboard,ASUS,MSI

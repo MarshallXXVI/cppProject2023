@@ -6,15 +6,8 @@
 #include <vector>
 #include "./Solver.hpp"
 
-struct model
-{
-    std::string prozessor_, ram_, bildschirm_;
-};
-
 class Checker {
-    option option_;
-    std::vector<constraint> constraints_;
-    std::vector<model> models_;
+
 public:
     // read data from file.
     void readDataInput(const std::string &options,
