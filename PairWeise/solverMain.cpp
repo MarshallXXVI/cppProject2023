@@ -26,8 +26,8 @@ int main(int argc, char **argv) {
   Solver s;
   s.getDataFromOption(p.getOptions());
   s.getDataFromConstraint(p.getConstraints());
-  s.generatePair();
-  // s.generateModells();
+  s.generateTuple();
+  s.generateModells();
   // // c.readDataModel(modelsFile);
   // // if (!c.ifModel()) {
   // //   return c.errorCode_;

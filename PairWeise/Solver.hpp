@@ -5,15 +5,29 @@
 #include <utility>
 #include <vector>
 
-struct Pair
+struct Tuple
 {
   std::string Option_;
   std::string Value_;
 };
 
+struct TupleForConstraints
+{
+  std::string Option_;
+  std::string Value_;
+  bool Match = NULL;
+};
+
+struct Pair
+{
+  Tuple Option1;
+  Tuple Option2;
+};
+
 // Models with pr. membervariables.
 class Solver {
-  std::vector<std::vector<Pair>> Pair_;
+  std::vector<std::vector<Tuple>> tupleOption;
+  std::vector<std::vector<TupleForConstraints>> tupleConstraints;
   std::vector<std::vector<std::string>> optionCopy_;
   std::vector<std::vector<std::string>> constraintsCopy_;
 
@@ -25,11 +39,11 @@ public:
   // Main logic for generating modells. Depending on coming UB might
   // have to be adjusted.
   void generateModells();
-  void generatePair();
+  void generateTuple();
 
 private:
   // filtering function return true if model match one of constraints.
-  bool ifMatchConstraints(int i, int j, int k);
+  bool ifMatchConstraints(std::vector<Tuple> param);
   // eliminate trailing whitespaces (newlines).
   std::string readAndTrimTrailingSpaces(std::string const & file);
 };
