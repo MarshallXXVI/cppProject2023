@@ -14,8 +14,8 @@ struct Tuple
 struct TupleForConstraints
 {
   std::string Option_;
-  std::string Value_;
-  bool Match = NULL;
+  std::string value_;
+  bool Match = false;
 };
 
 struct Pair

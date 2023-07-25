@@ -51,16 +51,18 @@ void Solver::generateTuple() {
 
   for (int i = 0; i < (int)constraintsCopy_.size(); i++) {
     std::vector<TupleForConstraints> tempVecTuple;
-    for (int j = 0; j < (int)constraintsCopy_[i].size() - 1; j++) {
-      std::string temp1 = constraintsCopy_[i][j];
-      // problem is here.
-      std::string temp2 = constraintsCopy_[i][j+1];
-      std::cout << temp2 << ">" <<std::endl;
-      TupleForConstraints tempTuple = {temp1, temp2};
+    int j = 0;
+    int k = 1;
+    //Problem happen here.
+    while (j < (int)constraintsCopy_[i].size() - 1 && k < (int)constraintsCopy_[i].size()) {
+      std::cout << (int)constraintsCopy_[i].size() << std::endl;
+      std::string temp1;
+      std::string temp2;
+      TupleForConstraints tempTuple = {constraintsCopy_[i][j].c_str(), constraintsCopy_[i][k].c_str(), false};
+      std::cout << "(" << tempTuple.value_.size() << ")" << std::endl;
       tempVecTuple.push_back(tempTuple);
-      if (j < (int)constraintsCopy_[i].size() - 1) {
-        j++;
-      }
+      j = j + 2;
+      k = k + 2;
     }
     tupleConstraints.push_back(tempVecTuple);
   }
@@ -73,7 +75,7 @@ void Solver::generateTuple() {
 
   for (int i = 0; i < (int)tupleConstraints.size(); i++) {
     for (int j = 0; j < (int)tupleConstraints[i].size(); j++) {
-      std::cout << "<" << tupleConstraints[i][j].Option_ << "," << tupleConstraints[i][j].Value_ << ">" << std::endl;
+      std::cout << "<" << tupleConstraints[i][j].Option_ << "," << tupleConstraints[i][j].value_ << ">" << std::endl;
     }
   }
 }
@@ -86,8 +88,8 @@ bool Solver::ifMatchConstraints(std::vector<Tuple> param) {
       for (int i = 0; i < (int)param.size(); i++) {
         if (param[i].Option_ == tupleConstraints[l][k].Option_) {
           std::cout << "checking for :" << tupleConstraints[l][k].Option_  << "," << param[i].Option_ << std::endl;
-          std::cout << "compare value :" << tupleConstraints[l][k].Value_  << "," << param[i].Value_ << std::endl;
-          if (param[i].Value_ == tupleConstraints[l][k].Value_) {
+          std::cout << "compare value :" << tupleConstraints[l][k].value_  << "," << param[i].Value_ << std::endl;
+          if (param[i].Value_ == tupleConstraints[l][k].value_) {
             tupleConstraints[l][k].Match = true;
           }
         }
