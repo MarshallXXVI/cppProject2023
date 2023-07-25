@@ -53,6 +53,7 @@ void Solver::generateTuple() {
     std::vector<TupleForConstraints> tempVecTuple;
     for (int j = 0; j < (int)constraintsCopy_[i].size() - 1; j++) {
       std::string temp1 = constraintsCopy_[i][j];
+      // problem is here.
       std::string temp2 = constraintsCopy_[i][j+1];
       std::cout << temp2 << ">" <<std::endl;
       TupleForConstraints tempTuple = {temp1, temp2};
