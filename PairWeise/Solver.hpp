@@ -45,8 +45,14 @@ private:
   // filtering function return true if model match one of constraints.
   bool ifMatchConstraints(std::vector<Tuple> param);
   // eliminate trailing whitespaces (newlines).
-  std::string readAndTrimTrailingSpaces(std::string const & file);
+  std::string readAndTrimTrailingSpaces(std::string const &file);
 
   std::string thisCofigToString(std::vector<Tuple> tempConfig);
+
+  void generatePermutations(const std::vector<std::vector<Tuple>> &data,
+                          std::vector<Tuple> &currentPermutation,
+                          int categoryIndex,
+                          std::ofstream &buffer);
+  void resetConstraints();
 };
 #endif // SOLVER_H_

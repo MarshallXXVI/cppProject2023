@@ -13,7 +13,7 @@ void Parse::ReadDataFromFile(const std::string &filename1,
     for (int i = 0; i < (int)tempVecFile2.size(); i++) {
       std::vector<std::string> tempConstraintsType;
       while((i < (int)tempVecFile2.size()) && (tempVecFile2[i] != "\n")) {
-        std::cout << tempVecFile2[i].c_str() << " has size of :" <<tempVecFile2[i].size() << std::endl;
+        //std::cout << tempVecFile2[i].c_str() << " has size of :" <<tempVecFile2[i].size() << std::endl;
         tempConstraintsType.push_back(tempVecFile2[i]);
         i++;
       }
@@ -24,7 +24,7 @@ void Parse::ReadDataFromFile(const std::string &filename1,
     for (int i = 0; i < (int)tempVecFile1.size(); i++) {
       std::vector<std::string> tempOptionType;
       while((i < (int)tempVecFile1.size()) && (tempVecFile1[i] != "\n")) {
-        std::cout << tempVecFile1[i].c_str() << " has size of :" <<tempVecFile1[i].size() << std::endl;
+        //std::cout << tempVecFile1[i].c_str() << " has size of :" <<tempVecFile1[i].size() << std::endl;
         tempOptionType.push_back(tempVecFile1[i]);
         i++;
       }

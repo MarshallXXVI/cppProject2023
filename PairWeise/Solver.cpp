@@ -19,27 +19,50 @@ void Solver::getDataFromConstraint(std::vector<std::vector<std::string>> param) 
 
 // __________________________________________________________________
 void Solver::generateModells() {
-  std::ofstream MyFile1("a.models");
-  int incrementer = 0;
-  srand(time(NULL));
-  while (incrementer < 1000) {
-    std::vector<Tuple> tempConfig;
-    // can do smarter way but how ?
-    // in forum Solver functional weise.
-    for (int i = 0; i < (int)tupleOption.size(); i++) {
-      int size = (int)tupleOption[i].size();
-      int j;
-      j = rand() % size;
-      tempConfig.push_back(tupleOption[i][j]);
-    }
-    if(!ifMatchConstraints(tempConfig)) {
-      MyFile1 << thisCofigToString(tempConfig);
-      //incrementer++;
-    }
-    incrementer++;
-  }
+  std::ofstream MyFile1("b.models");
+  std::vector<Tuple> currentPermutation;
+  std::string stringBuffer;
+  generatePermutations(tupleOption, currentPermutation, 0, MyFile1);
   MyFile1.close();
+  std::ofstream MyFileCopy("a.models");
+  MyFileCopy << readAndTrimTrailingSpaces("b.models");
+  MyFileCopy.close();
+  std::filesystem::remove("b.models");
+
 }
+
+
+// __________________________________________________________________
+void Solver::generatePermutations(const std::vector<std::vector<Tuple>>& data,
+                          std::vector<Tuple>& currentPermutation,
+                          int categoryIndex,
+                          std::ofstream& FILE)
+{
+    if (categoryIndex == (int)data.size()) {
+      std::vector<Tuple> tempConfigBuffer;
+        // Print the current permutation
+        for (size_t i = 0; i < currentPermutation.size(); ++i) {
+            //std::cout << currentPermutation[i].Option_ << "," << currentPermutation[i].Value_;
+            tempConfigBuffer.push_back(currentPermutation[i]);
+            if (i < currentPermutation.size() - 1) {
+                //std::cout << ",";
+            }
+        }
+        //std::cout << std::endl;
+        if (!ifMatchConstraints(tempConfigBuffer)) {
+          FILE << thisCofigToString(tempConfigBuffer);
+          std::cout << thisCofigToString(tempConfigBuffer);
+        }
+        return;
+    }
+
+    for (const auto& item : data[categoryIndex]) {
+        currentPermutation.push_back(item);
+        generatePermutations(data, currentPermutation, categoryIndex + 1, FILE);
+        currentPermutation.pop_back();
+    }
+}
+
 
 // __________________________________________________________________
 std::string Solver::thisCofigToString(std::vector<Tuple> tempConfig) {
@@ -76,14 +99,14 @@ void Solver::generateTuple() {
       std::string temp1;
       std::string temp2;
       TupleForConstraints tempTuple = {constraintsCopy_[i][j].c_str(), constraintsCopy_[i][k].c_str(), false};
-      std::cout << "(" << tempTuple.value_.size() << ")" << std::endl;
+      //std::cout << "(" << tempTuple.value_.size() << ")" << std::endl;
       tempVecTuple.push_back(tempTuple);
       j = j + 2;
       k = k + 2;
     }
     tupleConstraints.push_back(tempVecTuple);
   }
-  // just for debug.
+  //just for debug.
   // for (int i = 0; i < (int)tupleOption.size(); i++) {
   //   for (int j = 0; j < (int)tupleOption[i].size(); j++) {
   //     std::cout << "(" << tupleOption[i][j].Option_ << "," << tupleOption[i][j].Value_ << ")" << std::endl;
@@ -99,12 +122,13 @@ void Solver::generateTuple() {
 
 // __________________________________________________________________
 bool Solver::ifMatchConstraints(std::vector<Tuple> param) {
+  resetConstraints();
   for (int l = 0; l < (int)tupleConstraints.size(); l++) {
     for (int k = 0; k < (int)tupleConstraints[l].size(); k++) {
       for (int i = 0; i < (int)param.size(); i++) {
         if (param[i].Option_ == tupleConstraints[l][k].Option_) {
-          std::cout << "checking for :" << tupleConstraints[l][k].Option_  << "," << param[i].Option_ << std::endl;
-          std::cout << "compare value :" << tupleConstraints[l][k].value_  << "," << param[i].Value_ << std::endl;
+          //std::cout << "checking for :" << tupleConstraints[l][k].Option_  << "," << param[i].Option_ << std::endl;
+          //std::cout << "compare value :" << tupleConstraints[l][k].value_  << "," << param[i].Value_ << std::endl;
           if (param[i].Value_ == tupleConstraints[l][k].value_) {
             tupleConstraints[l][k].Match = true;
           }
@@ -113,18 +137,26 @@ bool Solver::ifMatchConstraints(std::vector<Tuple> param) {
     }
     std::vector<bool> tempBool;
     for (int k = 0; k <(int)tupleConstraints[l].size(); k ++) {
-      std::cout << tupleConstraints[l][k].Match << std::endl;
+      //std::cout << tupleConstraints[l][k].Match << std::endl;
       tempBool.push_back(tupleConstraints[l][k].Match);
     }
     int sum = std::accumulate(std::begin(tempBool), std::end(tempBool), 0);
     if (sum == (int)tempBool.size()) {
-      std::cout << "this configuration match the constraints" << std::endl;
+      //std::cout << "this configuration match the constraints" << std::endl;
       return true;
     }
   }
   return false;
 }
 
+// __________________________________________________________________
+void Solver::resetConstraints() {
+  for (int l = 0; l < (int)tupleConstraints.size(); l++) {
+    for (int k = 0; k < (int)tupleConstraints[l].size(); k++) {
+      tupleConstraints[l][k].Match = false;
+    }
+  }
+}
 // __________________________________________________________________
 std::string Solver::readAndTrimTrailingSpaces(std::string const & file)
 {
