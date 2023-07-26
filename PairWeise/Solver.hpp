@@ -46,5 +46,7 @@ private:
   bool ifMatchConstraints(std::vector<Tuple> param);
   // eliminate trailing whitespaces (newlines).
   std::string readAndTrimTrailingSpaces(std::string const & file);
+
+  std::string thisCofigToString(std::vector<Tuple> tempConfig);
 };
 #endif // SOLVER_H_

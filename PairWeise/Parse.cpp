@@ -1,6 +1,7 @@
 #include "./Parse.hpp"
 #include <fstream>
 #include <iostream>
+#include <stdio.h>
 
 /// if the input file is not sorted. case 1.
 /// sorted vector of int.
@@ -8,25 +9,28 @@
 // __________________________________________________________________
 void Parse::ReadDataFromFile(const std::string &filename1,
                              const std::string &filename2) {
+    std::vector<std::string> tempVecFile2 = ReturnVectorOfWord(filename2);
+    for (int i = 0; i < (int)tempVecFile2.size(); i++) {
+      std::vector<std::string> tempConstraintsType;
+      while((i < (int)tempVecFile2.size()) && (tempVecFile2[i] != "\n")) {
+        std::cout << tempVecFile2[i].c_str() << " has size of :" <<tempVecFile2[i].size() << std::endl;
+        tempConstraintsType.push_back(tempVecFile2[i]);
+        i++;
+      }
+      constraints_.push_back(tempConstraintsType);
+    }
+
     std::vector<std::string> tempVecFile1 = ReturnVectorOfWord(filename1);
     for (int i = 0; i < (int)tempVecFile1.size(); i++) {
       std::vector<std::string> tempOptionType;
       while((i < (int)tempVecFile1.size()) && (tempVecFile1[i] != "\n")) {
+        std::cout << tempVecFile1[i].c_str() << " has size of :" <<tempVecFile1[i].size() << std::endl;
         tempOptionType.push_back(tempVecFile1[i]);
         i++;
       }
       options_.push_back(tempOptionType);
     }
-
-    std::vector<std::string> tempVecFile2 = ReturnVectorOfWord(filename2);
-    for (int i = 0; i < (int)tempVecFile2.size(); i++) {
-      std::vector<std::string> tempConstraintsType;
-      while((i < (int)tempVecFile2.size()) && (tempVecFile2[i] != "\n")) {
-        tempConstraintsType.push_back(tempVecFile2[i]);
-        i++;
-      }
-      constraints_.push_back(tempConstraintsType);
-    }   
+   
 }
 
 // __________________________________________________________________
@@ -34,7 +38,7 @@ std::vector<std::string> Parse::ReturnVectorOfWord(const std::string &filename) 
   std::vector<std::string> tempVecString;
   std::ifstream thisFile(filename);
   char c;
-  std::string word = "";
+  std::string word;
   while (thisFile.get(c)) {
     if (c == ',' || c == '\n') {
       tempVecString.push_back(word);
@@ -44,7 +48,10 @@ std::vector<std::string> Parse::ReturnVectorOfWord(const std::string &filename) 
       word = "";
       continue;
     } else {
-      word += c;
+      if (c != '\n') {
+        //std::cout << c << std::endl;
+        word += c;
+      }
     }
   }
   tempVecString.push_back(word);
@@ -80,16 +87,17 @@ void Parse::PrettyPrinter() {
     for (int j = 0; j <(int)constraints_[i].size(); j++) {
       if (j < (int)constraints_[i].size()) {
         if (j == (int)constraints_[i].size() - 1) {
+          //std::cout << constraints_[i][j].size() << std::endl;
           if (i == (int)constraints_.size() - 1 && j == (int)constraints_[i].size() - 1) {
           //std::cout << constraints_[i][j];
           MyFile2 << constraints_[i][j];
           } else {
-          //std::cout << constraints_[i][j] << std::endl;
-          MyFile2 << constraints_[i][j] << std::endl;
+          MyFile2 << constraints_[i][j];
+          MyFile2 << std::endl;
           }
         } else {
           //std::cout << constraints_[i][j] << ",";
-          MyFile2 << constraints_[i][j]<< ",";
+          MyFile2 << constraints_[i][j] << ",";
         }
       }
     }
