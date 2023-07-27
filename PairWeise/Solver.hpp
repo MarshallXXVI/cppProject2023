@@ -39,15 +39,18 @@ public:
   // Main logic for generating modells. Depending on coming UB might
   // have to be adjusted.
   void generateModells();
+
   void generateTuple();
+
+  void trimingTrailingSpaces(std::string const &file1, std::string const &file2);
 
 private:
   // filtering function return true if model match one of constraints.
   bool ifMatchConstraints(std::vector<Tuple> param);
   // eliminate trailing whitespaces (newlines).
   std::string readAndTrimTrailingSpaces(std::string const &file);
-
-  std::string thisCofigToString(std::vector<Tuple> tempConfig);
+  // turn the given Configuration to actual string.
+  std::string thisConfigToString(std::vector<Tuple> tempConfig);
 
   void generatePermutations(const std::vector<std::vector<Tuple>> &data,
                           std::vector<Tuple> &currentPermutation,

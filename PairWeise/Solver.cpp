@@ -21,7 +21,6 @@ void Solver::getDataFromConstraint(std::vector<std::vector<std::string>> param) 
 void Solver::generateModells() {
   std::ofstream MyFile1("b.models");
   std::vector<Tuple> currentPermutation;
-  std::string stringBuffer;
   generatePermutations(tupleOption, currentPermutation, 0, MyFile1);
   MyFile1.close();
   std::ofstream MyFileCopy("a.models");
@@ -40,18 +39,20 @@ void Solver::generatePermutations(const std::vector<std::vector<Tuple>>& data,
 {
     if (categoryIndex == (int)data.size()) {
       std::vector<Tuple> tempConfigBuffer;
+      //std::cout << "here" << std::endl;
         // Print the current permutation
         for (size_t i = 0; i < currentPermutation.size(); ++i) {
             //std::cout << currentPermutation[i].Option_ << "," << currentPermutation[i].Value_;
             tempConfigBuffer.push_back(currentPermutation[i]);
-            if (i < currentPermutation.size() - 1) {
-                //std::cout << ",";
-            }
+            // if (i < currentPermutation.size() - 1) {
+            //     //std::cout << ",";
+            // }
         }
         //std::cout << std::endl;
+        //std::cout << "here" << std::endl;
+        //std::cout << thisConfigToString(tempConfigBuffer);
         if (!ifMatchConstraints(tempConfigBuffer)) {
-          FILE << thisCofigToString(tempConfigBuffer);
-          std::cout << thisCofigToString(tempConfigBuffer);
+          FILE << thisConfigToString(tempConfigBuffer);
         }
         return;
     }
@@ -65,7 +66,7 @@ void Solver::generatePermutations(const std::vector<std::vector<Tuple>>& data,
 
 
 // __________________________________________________________________
-std::string Solver::thisCofigToString(std::vector<Tuple> tempConfig) {
+std::string Solver::thisConfigToString(std::vector<Tuple> tempConfig) {
   std::string tempString;
   for (int i = 0; i < (int)tempConfig.size(); i++) {
       if (i == (int)tempConfig.size() - 1) {
@@ -122,6 +123,9 @@ void Solver::generateTuple() {
 
 // __________________________________________________________________
 bool Solver::ifMatchConstraints(std::vector<Tuple> param) {
+  if (tupleConstraints.size() == 1 && tupleConstraints[0].empty()) {
+    return false;
+  }
   resetConstraints();
   for (int l = 0; l < (int)tupleConstraints.size(); l++) {
     for (int k = 0; k < (int)tupleConstraints[l].size(); k++) {
@@ -157,9 +161,9 @@ void Solver::resetConstraints() {
     }
   }
 }
+
 // __________________________________________________________________
-std::string Solver::readAndTrimTrailingSpaces(std::string const & file)
-{
+std::string Solver::readAndTrimTrailingSpaces(std::string const &file) {
     std::ifstream thisFile(file);
     std::string   buffer(std::istreambuf_iterator<char>{thisFile}, {});
 
@@ -167,4 +171,17 @@ std::string Solver::readAndTrimTrailingSpaces(std::string const & file)
         buffer.pop_back();
 
     return buffer;
+}
+
+// __________________________________________________________________
+void Solver::trimingTrailingSpaces(std::string const &file1, std::string const &file2) {
+  std::string tempString1 = readAndTrimTrailingSpaces(file1);
+  std::ofstream MyFile1(file1);
+  MyFile1 << tempString1;
+  MyFile1.close();
+
+  std::string tempString2 = readAndTrimTrailingSpaces(file2);
+  std::ofstream MyFile2(file2);
+  MyFile2 << tempString2;
+  MyFile2.close();
 }
