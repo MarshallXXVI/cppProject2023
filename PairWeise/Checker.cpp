@@ -12,7 +12,7 @@ void Checker::readDataInput(const std::string &options,
     Parse p;
     p.ReadDataFromFile(options, constraints);
     optionFile = p.getOptions();
-    constraintFile = p.getOptions();             
+    constraintFile = p.getConstraints();             
 }
 
 // __________________________________________________________________
@@ -50,7 +50,7 @@ int Checker::ifOptionValid() {
             count++;
         }
     }
-    if (count % 2 != 0) {
+    if (count < 4) {
         return 10;
     }
     //Check option file.
@@ -77,7 +77,10 @@ int Checker::ifOptionValid() {
 
 // __________________________________________________________________
 int Checker::ifConstraintValid() {
-    //Check if empty .constraints
+    constraintFile.shrink_to_fit();
+    if (constraintFile[0][0] == "") {
+        return 0;
+    }
     int count = 0;
     for (int i = 0; i < (int)constraintFile.size(); i++) {
         for (int j = 0; j < (int)constraintFile[i].size(); j++) {
@@ -96,10 +99,9 @@ int Checker::ifConstraintValid() {
             TupleForConstraints tempTuples = tupleConstraintsCopy[i][j];
             if (!ifThisTupleOfConstraintValid(tempTuples)) {
                 return 20;
-            } 
+            }
         }
     }
-
     return 0;
 }
 
