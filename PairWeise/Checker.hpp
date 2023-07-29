@@ -22,20 +22,20 @@ private:
     std::vector<std::vector<std::string>> constraintFile;
     std::vector<std::vector<std::string>> modelFile;
     std::vector<std::vector<TupleForConstraints>> tupleConstraintsCopy;
+    std::vector<std::vector<Tuple>> Model;
     // setter of model field.
-    void setModel(std::vector<std::string> param);
+    void setModel();
     // in jedem Model alle Optionen genau einmal angegeben werden.
     int ifCondition1Valid();
     // jedes Model auch alle Constraints erfuellt.
     int ifCondition2Valid();
-    // In den Modellen und in den Constraint 
-    // gibt es nur Optionen und Werte aus der .options Datei.
+    // In den Modellen gibt es nur Optionen und Werte aus der .options Datei.
     int ifCondition3Valid();
     // handle invalide Input Dateien.
     int ifOptionValid();
+    // in den Constraint gibt es nur Optionen und Werte aus der .options Datei.
     int ifConstraintValid();
     // helper function;
-    void helperFunctionBuildData();
     bool ifThisTupleOfConstraintValid(TupleForConstraints param);
 };
 #endif // CHECKER_H_

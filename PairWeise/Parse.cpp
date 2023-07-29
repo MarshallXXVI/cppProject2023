@@ -34,6 +34,21 @@ void Parse::ReadDataFromFile(const std::string &filename1,
 }
 
 // __________________________________________________________________
+std::vector<std::vector<std::string>> Parse::vectorTransform(std::vector<std::string> param) {
+  std::vector<std::vector<std::string>> tempField;
+  for (int i = 0; i < (int)param.size(); i++) {
+    std::vector<std::string> tempConstraintsType;
+    while((i < (int)param.size()) && (param[i] != "\n")) {
+      //std::cout << tempVecFile2[i].c_str() << " has size of :" <<tempVecFile2[i].size() << std::endl;
+      tempConstraintsType.push_back(param[i]);
+      i++;
+    }
+    tempField.push_back(tempConstraintsType);
+  }
+  return tempField;
+}
+
+// __________________________________________________________________
 std::vector<std::string> Parse::ReturnVectorOfWord(const std::string &filename) {
   std::vector<std::string> tempVecString;
   std::ifstream thisFile(filename);

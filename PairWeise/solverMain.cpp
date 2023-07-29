@@ -29,4 +29,5 @@ int main(int argc, char **argv) {
   s.getDataFromOption(p.getOptions());
   s.getDataFromConstraint(p.getConstraints());
   s.generateModells();
+  c.readDataModel(modelsFile);
 }

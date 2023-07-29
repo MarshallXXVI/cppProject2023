@@ -16,15 +16,30 @@ void Checker::readDataInput(const std::string &options,
 }
 
 // __________________________________________________________________
-void Checker::helperFunctionBuildData() {
-}
-
-// __________________________________________________________________
 void Checker::readDataModel(const std::string &models) {
+    Parse p;
+    modelFile = p.vectorTransform(p.ReturnVectorOfWord(models));
+    setModel();
 }
 
 // __________________________________________________________________
-void Checker::setModel(std::vector<std::string> param) {
+void Checker::setModel() {
+  for (int i = 0; i < (int)modelFile.size(); i++) {
+    std::vector<Tuple> tempVecTuple;
+    int j = 0;
+    int k = 1;
+    while (j < (int)modelFile[i].size() - 1 && k < (int)modelFile[i].size()) {
+      //std::cout << (int)constraintsCopy_[i].size() << std::endl;
+      std::string temp1;
+      std::string temp2;
+      Tuple tempTuple = {modelFile[i][j].c_str(), modelFile[i][k].c_str()};
+      //std::cout << "(" << tempTuple.value_.size() << ")" << std::endl;
+      tempVecTuple.push_back(tempTuple);
+      j = j + 2;
+      k = k + 2;
+    }
+    Model.push_back(tempVecTuple);
+  }
 }
 
 // __________________________________________________________________
