@@ -40,9 +40,7 @@ public:
   // have to be adjusted.
   void generateModells();
 
-  void generateTuple();
-
-  void trimingTrailingSpaces(std::string const &file1, std::string const &file2);
+  void handleInputFiles(std::string const &file1, std::string const &file2);
 
   std::vector<std::vector<TupleForConstraints>> getTupleConstraints() { return tupleConstraints; }
 
@@ -59,5 +57,7 @@ private:
                           int categoryIndex,
                           std::ofstream &buffer);
   void resetConstraints();
+
+  void generateTuple();
 };
 #endif // SOLVER_H_

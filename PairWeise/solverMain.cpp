@@ -16,10 +16,10 @@ int main(int argc, char **argv) {
     std::cout << "Usage: ./Main [file] [file] [file]" << std::endl;
     std::exit(1);
   }
-
   std::string optionFile = argv[1];
   std::string constraintsFile = argv[2];
   std::string modelsFile = argv[3];
+  s.handleInputFiles(optionFile, constraintsFile);
   s.trimingTrailingSpaces(optionFile, constraintsFile);
   c.readDataInput(optionFile, constraintsFile);
   if (!c.ifOptionAndConstraints()) {
@@ -29,10 +29,5 @@ int main(int argc, char **argv) {
   p.PrettyPrinter();
   s.getDataFromOption(p.getOptions());
   s.getDataFromConstraint(p.getConstraints());
-  s.generateTuple();
   s.generateModells();
-  // // c.readDataModel(modelsFile);
-  // // if (!c.ifModel()) {
-  // //   return c.errorCode_;
-  // // }
 }

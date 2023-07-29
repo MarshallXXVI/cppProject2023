@@ -19,6 +19,7 @@ void Solver::getDataFromConstraint(std::vector<std::vector<std::string>> param) 
 
 // __________________________________________________________________
 void Solver::generateModells() {
+  generateTuple();
   std::ofstream MyFile1("b.models");
   std::vector<Tuple> currentPermutation;
   generatePermutations(tupleOption, currentPermutation, 0, MyFile1);
@@ -94,7 +95,6 @@ void Solver::generateTuple() {
     std::vector<TupleForConstraints> tempVecTuple;
     int j = 0;
     int k = 1;
-    //Problem happen here.
     while (j < (int)constraintsCopy_[i].size() - 1 && k < (int)constraintsCopy_[i].size()) {
       //std::cout << (int)constraintsCopy_[i].size() << std::endl;
       std::string temp1;
@@ -174,7 +174,7 @@ std::string Solver::readAndTrimTrailingSpaces(std::string const &file) {
 }
 
 // __________________________________________________________________
-void Solver::trimingTrailingSpaces(std::string const &file1, std::string const &file2) {
+void Solver::handleInputFiles(std::string const &file1, std::string const &file2) {
   std::string tempString1 = readAndTrimTrailingSpaces(file1);
   std::ofstream MyFile1(file1);
   MyFile1 << tempString1;
