@@ -20,7 +20,6 @@ int main(int argc, char **argv) {
   std::string constraintsFile = argv[2];
   std::string modelsFile = argv[3];
   s.handleInputFiles(optionFile, constraintsFile);
-  s.trimingTrailingSpaces(optionFile, constraintsFile);
   c.readDataInput(optionFile, constraintsFile);
   if (!c.ifOptionAndConstraints()) {
     return c.errorCode_;

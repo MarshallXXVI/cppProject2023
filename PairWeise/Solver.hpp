@@ -36,13 +36,14 @@ public:
   void getDataFromOption(std::vector<std::vector<std::string>> param);
   // Adding the various set of constraints.
   void getDataFromConstraint(std::vector<std::vector<std::string>> param);
+  std::vector<std::vector<TupleForConstraints>> getTupleConstraints() { return tupleConstraints; }
   // Main logic for generating modells. Depending on coming UB might
   // have to be adjusted.
   void generateModells();
-
+  
   void handleInputFiles(std::string const &file1, std::string const &file2);
 
-  std::vector<std::vector<TupleForConstraints>> getTupleConstraints() { return tupleConstraints; }
+  void generateTuple();
 
 private:
   // filtering function return true if model match one of constraints.
@@ -57,7 +58,5 @@ private:
                           int categoryIndex,
                           std::ofstream &buffer);
   void resetConstraints();
-
-  void generateTuple();
 };
 #endif // SOLVER_H_
