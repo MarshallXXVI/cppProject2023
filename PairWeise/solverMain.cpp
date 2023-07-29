@@ -21,10 +21,10 @@ int main(int argc, char **argv) {
   std::string constraintsFile = argv[2];
   std::string modelsFile = argv[3];
   s.trimingTrailingSpaces(optionFile, constraintsFile);
-  // c.readDataInput(optionFile, constraintsFile);
-  // if (!c.ifOptionAndConstraints()) {
-  //   return c.errorCode_;
-  // }
+  c.readDataInput(optionFile, constraintsFile);
+  if (!c.ifOptionAndConstraints()) {
+    return c.errorCode_;
+  }
   p.ReadDataFromFile(optionFile, constraintsFile);
   p.PrettyPrinter();
   s.getDataFromOption(p.getOptions());

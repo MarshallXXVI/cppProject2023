@@ -28,10 +28,10 @@ struct Pair
 class Solver {
   std::vector<std::vector<Tuple>> tupleOption;
   std::vector<std::vector<TupleForConstraints>> tupleConstraints;
-  std::vector<std::vector<std::string>> optionCopy_;
-  std::vector<std::vector<std::string>> constraintsCopy_;
 
 public:
+  std::vector<std::vector<std::string>> optionCopy_;
+  std::vector<std::vector<std::string>> constraintsCopy_;
   // Adding the various parameters to the options.
   void getDataFromOption(std::vector<std::vector<std::string>> param);
   // Adding the various set of constraints.
@@ -43,6 +43,8 @@ public:
   void generateTuple();
 
   void trimingTrailingSpaces(std::string const &file1, std::string const &file2);
+
+  std::vector<std::vector<TupleForConstraints>> getTupleConstraints() { return tupleConstraints; }
 
 private:
   // filtering function return true if model match one of constraints.

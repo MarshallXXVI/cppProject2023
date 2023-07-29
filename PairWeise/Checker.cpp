@@ -8,7 +8,11 @@
 
 // __________________________________________________________________
 void Checker::readDataInput(const std::string &options,
-                  const std::string &constraints) {             
+                  const std::string &constraints) {
+    Parse p;
+    p.ReadDataFromFile(options, constraints);
+    optionFile = p.getOptions();
+    constraintFile = p.getOptions();             
 }
 
 // __________________________________________________________________
@@ -40,25 +44,80 @@ int Checker::ifCondition3Valid() {
 
 // __________________________________________________________________
 int Checker::ifOptionValid() {
+    int count = 0;
+    for (int i = 0; i < (int)optionFile.size(); i++) {
+        for (int j = 0; j < (int)optionFile[i].size(); j++) {
+            count++;
+        }
+    }
+    if (count % 2 != 0) {
+        return 10;
+    }
     //Check option file.
+    if ((int)optionFile.size() < 2 && (int)optionFile[0].size() < 2 && (int)optionFile[1].size() < 2) {
+        return 10;
+    }
+    if ((int)optionFile.size() == 2 && optionFile[1].empty()) {
+        return 10;
+    }
+    std::vector<std::string> forbidenValues;
+    for (int i = 0; i < (int)optionFile.size(); i++) {
+        std::string forbidenValue = optionFile[i][0]; // copy string of Option.
+        forbidenValues.push_back(forbidenValue); // push each Option to forbindenValues.
+        for (int j = 1; j < (int)optionFile[i].size(); j++) { // iteratate each Value of options.
+            for (int k = 0; k < (int)forbidenValues.size(); k++) { // iterate each Option in forbindenValues.
+                if (optionFile[i][j] == forbidenValues[k]) { // if any Value of any Option match in forbindenValues.
+                    return 10; // return error code.
+                }
+            }
+        }
+    }
     return 0;
 }
 
 // __________________________________________________________________
 int Checker::ifConstraintValid() {
     //Check if empty .constraints
+    int count = 0;
+    for (int i = 0; i < (int)constraintFile.size(); i++) {
+        for (int j = 0; j < (int)constraintFile[i].size(); j++) {
+            count++;
+        }
+    }
+    if (count % 2 != 0) {
+        return 20;
+    }
+    Solver s;
+    s.constraintsCopy_ = constraintFile;
+    s.generateTuple();
+    tupleConstraintsCopy = s.getTupleConstraints();
+    for (int i = 0; i < (int)tupleConstraintsCopy.size(); i++) {
+        for (int j = 0; j < (int)tupleConstraintsCopy[i].size(); j++) {
+            TupleForConstraints tempTuples = tupleConstraintsCopy[i][j];
+            if (!ifThisTupleOfConstraintValid(tempTuples)) {
+                return 20;
+            } 
+        }
+    }
 
     return 0;
 }
 
 // __________________________________________________________________
-bool Checker::andTheRest(int i) {
-    return (file2_[i + 1] == "RAM" || 
-            file2_[i + 1] == "Bildschirm" || 
-            file2_[i + 1] == "Prozessor" || 
-            file2_[i + 1] == "");
+bool Checker::ifThisTupleOfConstraintValid(TupleForConstraints param) {
+    bool flag = false;
+    for (int k = 0; k < (int)optionFile.size(); k++) {
+        if (param.Option_ == optionFile[k][0]) {
+            flag = true;
+            for (int l = 1; l < (int)optionFile[k].size(); l++) {
+                if (param.value_ == optionFile[k][l] && flag) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
-
 // __________________________________________________________________
 bool Checker::ifModel() {
     if (ifCondition1Valid() == 0 && 

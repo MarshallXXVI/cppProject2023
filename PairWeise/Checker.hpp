@@ -18,9 +18,10 @@ public:
     bool ifOptionAndConstraints();
     int errorCode_;
 private:
-    std::vector<std::string> file1_;
-    std::vector<std::string> file2_;
-    std::vector<std::string> file3_;
+    std::vector<std::vector<std::string>> optionFile;
+    std::vector<std::vector<std::string>> constraintFile;
+    std::vector<std::vector<std::string>> modelFile;
+    std::vector<std::vector<TupleForConstraints>> tupleConstraintsCopy;
     // setter of model field.
     void setModel(std::vector<std::string> param);
     // in jedem Model alle Optionen genau einmal angegeben werden.
@@ -34,7 +35,7 @@ private:
     int ifOptionValid();
     int ifConstraintValid();
     // helper function;
-    bool andTheRest(int i);
     void helperFunctionBuildData();
+    bool ifThisTupleOfConstraintValid(TupleForConstraints param);
 };
 #endif // CHECKER_H_
