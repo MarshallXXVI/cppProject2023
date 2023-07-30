@@ -47,24 +47,20 @@ void Checker::setModel() {
 
 // __________________________________________________________________
 int Checker::ifConditionValid() {
-    std::vector<std::string> possibleOption;
-    for (int n = 0; n < (int)optionFile.size(); n++) {
-        possibleOption.push_back(optionFile[n][0]);
-    }
     for (int i = 0; i < (int)Model.size(); i++) {
-        if (!ifThisCongifurationValid(Model[i], possibleOption)) {
+        if (!ifThisCongifurationValid(Model[i])) {
             for (int j = 0; j < (int)Model[i].size(); j++) {
                 std::cout << "(" << Model[i][j].Option_ << "," << Model[i][j].Value_ << ")";
-                std::cout << " : this Configuration is invalid" << std::endl;
             }
+            std::cout << " : this Configuration is invalid" << std::endl;
             std::cout << std::endl;
             return 30;
         }
         if (s.ifMatchConstraints(Model[i])) {
             for (int j = 0; j < (int)Model[i].size(); j++) {
                 std::cout << "(" << Model[i][j].Option_ << "," << Model[i][j].Value_ << ")";
-                std::cout << " : this Configuration violated .constraints" << std::endl;
             }
+            std::cout << " : this Configuration violated .constraints" << std::endl;
             std::cout << std::endl;
             return 30;
         }
@@ -74,18 +70,22 @@ int Checker::ifConditionValid() {
 }
 
 // __________________________________________________________________
-bool Checker::ifThisCongifurationValid(std::vector<Tuple> param, std::vector<std::string> possibleOption) {
+bool Checker::ifThisCongifurationValid(std::vector<Tuple> param) {
+    int n = (int)optionFile.size();
     for (int i = 0; i < (int)param.size(); i++) {
         std::string tempOption = param[i].Option_;
-        for (int j = 0; j < (int)possibleOption.size(); j++) {
-            if (tempOption == possibleOption[j]) {
-                for (int k = 1; k < (int)param.size(); k++) {
+        for (int j = 0; j < (int)optionFile.size(); j++) {
+            if (tempOption == optionFile[j][0]) {
+                for (int k = 1; k < (int)optionFile[j].size(); k++) {
                     if (param[i].Value_ == optionFile[j][k]) {
-                        return true;
+                        n--;
                     }
                 }
             }
         }
+    }
+    if (n == 0) {
+        return true;
     }
     return false;
 }

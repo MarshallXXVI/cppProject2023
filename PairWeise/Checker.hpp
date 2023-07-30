@@ -35,6 +35,6 @@ private:
     int ifConstraintValid();
     // helper function;
     bool ifThisTupleOfConstraintValid(TupleForConstraints param);
-    bool ifThisCongifurationValid(std::vector<Tuple> param, std::vector<std::string> possibleOption);
+    bool ifThisCongifurationValid(std::vector<Tuple> param);
 };
 #endif // CHECKER_H_
