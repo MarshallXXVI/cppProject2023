@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <numeric>
 
 // __________________________________________________________________
 void Checker::readDataInput(const std::string &options,
@@ -72,19 +73,25 @@ int Checker::ifConditionValid() {
 // __________________________________________________________________
 bool Checker::ifThisCongifurationValid(std::vector<Tuple> param) {
     int n = (int)optionFile.size();
+    std::vector<bool> tempOptionPossilities;
+    for (int m = 0; m < n; m++) {
+        tempOptionPossilities[m] = false;
+    }
     for (int i = 0; i < (int)param.size(); i++) {
         std::string tempOption = param[i].Option_;
         for (int j = 0; j < (int)optionFile.size(); j++) {
             if (tempOption == optionFile[j][0]) {
                 for (int k = 1; k < (int)optionFile[j].size(); k++) {
                     if (param[i].Value_ == optionFile[j][k]) {
+                        tempOptionPossilities[j] = true;
                         n--;
                     }
                 }
             }
         }
     }
-    if (n == 0) {
+    int sum = std::accumulate(std::begin(tempOptionPossilities), std::end(tempOptionPossilities), 0);
+    if (n == 0 && sum == (int)optionFile.size()) {
         return true;
     }
     return false;
