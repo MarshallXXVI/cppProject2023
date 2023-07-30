@@ -34,7 +34,7 @@ private:
     // in den Constraint gibt es nur Optionen und Werte aus der .options Datei.
     int ifConstraintValid();
     // helper function;
-    bool ifThisTupleOfConstraintValid(TupleForConstraints param);
+    int ifThisTupleOfConstraintValid(TupleForConstraints param);
     bool ifThisCongifurationValid(std::vector<Tuple> param);
 };
 #endif // CHECKER_H_

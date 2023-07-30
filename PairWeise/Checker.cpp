@@ -75,7 +75,7 @@ bool Checker::ifThisCongifurationValid(std::vector<Tuple> param) {
     int n = (int)optionFile.size();
     std::vector<bool> tempOptionPossilities;
     for (int m = 0; m < n; m++) {
-        tempOptionPossilities[m] = false;
+        tempOptionPossilities.push_back(false);
     }
     for (int i = 0; i < (int)param.size(); i++) {
         std::string tempOption = param[i].Option_;
@@ -91,6 +91,7 @@ bool Checker::ifThisCongifurationValid(std::vector<Tuple> param) {
         }
     }
     int sum = std::accumulate(std::begin(tempOptionPossilities), std::end(tempOptionPossilities), 0);
+    //std::cout << sum <<std::endl;
     if (n == 0 && sum == (int)optionFile.size()) {
         return true;
     }
@@ -145,35 +146,57 @@ int Checker::ifConstraintValid() {
     if (count % 2 != 0) {
         return 20;
     }
+    int n = optionFile.size();
+    std::vector<int> tempInt;
+    for (int i = 0; i < n; i++) {
+        tempInt.push_back(0);
+    }
     tupleConstraintsCopy = s.getTupleConstraints();
     for (int i = 0; i < (int)tupleConstraintsCopy.size(); i++) {
         for (int j = 0; j < (int)tupleConstraintsCopy[i].size(); j++) {
-            TupleForConstraints tempTuples = tupleConstraintsCopy[i][j];
-            if (!ifThisTupleOfConstraintValid(tempTuples)) {
+            if ((int)tupleConstraintsCopy[i].size() > (int)optionFile.size()) {
                 return 20;
             }
+            TupleForConstraints tempTuples = tupleConstraintsCopy[i][j];
+            int tempReturnValue = ifThisTupleOfConstraintValid(tempTuples);
+            if (tempReturnValue == -1) {
+                return 20;
+            } else {
+                tempInt[tempReturnValue]++;
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        if (tempInt[i] > 1) {
+            return 20;
         }
     }
     return 0;
 }
 
 // __________________________________________________________________
-bool Checker::ifThisTupleOfConstraintValid(TupleForConstraints param) {
+int Checker::ifThisTupleOfConstraintValid(TupleForConstraints param) {
     bool flag = false;
     for (int k = 0; k < (int)optionFile.size(); k++) {
         if (param.Option_ == optionFile[k][0]) {
             flag = true;
             for (int l = 1; l < (int)optionFile[k].size(); l++) {
                 if (param.value_ == optionFile[k][l] && flag) {
-                    return true;
+                    return k;
                 }
             }
         }
     }
-    return false;
+    return -1;
 }
 // __________________________________________________________________
 bool Checker::ifModel() {
+    if (modelFile[0][0] == "") {
+        std::cout << modelFile[0][0];
+        errorCode_ = 40;
+        std::cout << "--------------UNKNOW--------------" << std::endl;
+        return false;
+    }
     errorCode_ = ifConditionValid();
     if (errorCode_ == 0) {
         std::cout << "--------------VERIFIED--------------" << std::endl;
@@ -195,7 +218,7 @@ bool Checker::ifOptionAndConstraints() {
             errorCode_ = ifOptionValid();
         }
         if (ifConstraintValid() != 0) {
-            std::cerr << "Not possible .constaints" << std::endl;
+            std::cerr << "Not possible .constraints" << std::endl;
             errorCode_ = ifConstraintValid();
         }
         return false;

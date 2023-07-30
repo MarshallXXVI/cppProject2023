@@ -25,4 +25,5 @@ int main(int argc, char **argv) {
   if (!c.ifModel()) {
     return c.errorCode_;
   }
+  return 0;
 }

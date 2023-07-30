@@ -2,7 +2,7 @@
 
 FUZZER=./crippled-fuzzer
 SOLVER=./solverMain
-CHECKER=./russian-roulette-checker
+CHECKER=./checkerMain
 
 if [ -x $FUZZER ];
 then

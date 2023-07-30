@@ -2,7 +2,7 @@
 
 FUZZER=./crippled-fuzzerMac
 SOLVER=./solverMain
-CHECKER=./russian-roulette-checkerMac
+CHECKER=./checkerMain
 
 if [ -x $FUZZER ];
 then
@@ -57,9 +57,10 @@ do
 
     $CHECKER fuzzer-test.{options,constraints,models}
     status=$?
-    if [ "$status" -ne 40 -a "$status" -ne 0 ];
+
+    if [ "$status" -ne 10 -a "$status" -ne 20 -a "$status" -ne 40 -a "$status" -ne 0 ];
     then
-    echo "the checker failed on fuzzer-test.{options,constraints,models}"
+    echo "the checker failed on fuzzer-test.{options,constraints}"
     exit -1;
     fi;
 done

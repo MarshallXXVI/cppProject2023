@@ -8,7 +8,6 @@
 // check if incoming file has eol if yes remove.
 // and also check if a.constraints is empty.
 int main(int argc, char **argv) {
-  Checker c;
   Solver s;
   Parse p;
   // Parse the command-line arguments.
@@ -20,14 +19,9 @@ int main(int argc, char **argv) {
   std::string constraintsFile = argv[2];
   std::string modelsFile = argv[3];
   s.handleInputFiles(optionFile, constraintsFile);
-  c.readDataInput(optionFile, constraintsFile);
-  if (!c.ifOptionAndConstraints()) {
-    return c.errorCode_;
-  }
   p.ReadDataFromFile(optionFile, constraintsFile);
   p.PrettyPrinter();
   s.getDataFromOption(p.getOptions());
   s.getDataFromConstraint(p.getConstraints());
   s.generateModells();
-  c.readDataModel(modelsFile);
 }
