@@ -12,7 +12,10 @@ void Checker::readDataInput(const std::string &options,
     Parse p;
     p.ReadDataFromFile(options, constraints);
     optionFile = p.getOptions();
-    constraintFile = p.getConstraints();             
+    constraintFile = p.getConstraints();
+    s.constraintsCopy_ = constraintFile;
+    s.optionCopy_ = optionFile;
+    s.generateTuple();         
 }
 
 // __________________________________________________________________
@@ -43,18 +46,48 @@ void Checker::setModel() {
 }
 
 // __________________________________________________________________
-int Checker::ifCondition1Valid() {
+int Checker::ifConditionValid() {
+    std::vector<std::string> possibleOption;
+    for (int n = 0; n < (int)optionFile.size(); n++) {
+        possibleOption.push_back(optionFile[n][0]);
+    }
+    for (int i = 0; i < (int)Model.size(); i++) {
+        if (!ifThisCongifurationValid(Model[i], possibleOption)) {
+            for (int j = 0; j < (int)Model[i].size(); j++) {
+                std::cout << "(" << Model[i][j].Option_ << "," << Model[i][j].Value_ << ")";
+                std::cout << " : this Configuration is invalid" << std::endl;
+            }
+            std::cout << std::endl;
+            return 30;
+        }
+        if (s.ifMatchConstraints(Model[i])) {
+            for (int j = 0; j < (int)Model[i].size(); j++) {
+                std::cout << "(" << Model[i][j].Option_ << "," << Model[i][j].Value_ << ")";
+                std::cout << " : this Configuration violated .constraints" << std::endl;
+            }
+            std::cout << std::endl;
+            return 30;
+        }
+    }
+
     return 0;
 }
 
 // __________________________________________________________________
-int Checker::ifCondition2Valid() {
-    return 0;
-}
-
-// __________________________________________________________________
-int Checker::ifCondition3Valid() {
-    return 0;
+bool Checker::ifThisCongifurationValid(std::vector<Tuple> param, std::vector<std::string> possibleOption) {
+    for (int i = 0; i < (int)param.size(); i++) {
+        std::string tempOption = param[i].Option_;
+        for (int j = 0; j < (int)possibleOption.size(); j++) {
+            if (tempOption == possibleOption[j]) {
+                for (int k = 1; k < (int)param.size(); k++) {
+                    if (param[i].Value_ == optionFile[j][k]) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }
 
 // __________________________________________________________________
@@ -105,9 +138,6 @@ int Checker::ifConstraintValid() {
     if (count % 2 != 0) {
         return 20;
     }
-    Solver s;
-    s.constraintsCopy_ = constraintFile;
-    s.generateTuple();
     tupleConstraintsCopy = s.getTupleConstraints();
     for (int i = 0; i < (int)tupleConstraintsCopy.size(); i++) {
         for (int j = 0; j < (int)tupleConstraintsCopy[i].size(); j++) {
@@ -137,13 +167,11 @@ bool Checker::ifThisTupleOfConstraintValid(TupleForConstraints param) {
 }
 // __________________________________________________________________
 bool Checker::ifModel() {
-    if (ifCondition1Valid() == 0 && 
-        ifCondition2Valid() == 0 && 
-        ifCondition3Valid() == 0) {
+    if (ifConditionValid() == 0) {
         std::cout << "VERIFIED" << std::endl;
         return true;
     } else {
-        errorCode_ = 30;
+        errorCode_ = ifConditionValid();
         std::cout << "UNVERIFIED" << std::endl;
         return false;
     }

@@ -44,10 +44,10 @@ public:
   void handleInputFiles(std::string const &file1, std::string const &file2);
 
   void generateTuple();
-
-private:
   // filtering function return true if model match one of constraints.
   bool ifMatchConstraints(std::vector<Tuple> param);
+
+private:
   // eliminate trailing whitespaces (newlines).
   std::string readAndTrimTrailingSpaces(std::string const &file);
   // turn the given Configuration to actual string.
