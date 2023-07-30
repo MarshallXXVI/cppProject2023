@@ -167,11 +167,11 @@ bool Checker::ifThisTupleOfConstraintValid(TupleForConstraints param) {
 }
 // __________________________________________________________________
 bool Checker::ifModel() {
-    if (ifConditionValid() == 0) {
+    errorCode_ = ifConditionValid();
+    if (errorCode_ == 0) {
         std::cout << "VERIFIED" << std::endl;
         return true;
     } else {
-        errorCode_ = ifConditionValid();
         std::cout << "UNVERIFIED" << std::endl;
         return false;
     }
