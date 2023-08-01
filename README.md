@@ -16,8 +16,8 @@ To run binary solverMain :
 ```
 This will run ./solverMain a.options a.constraints a.models
 
-After generated a.models now can modify every files to test if Checker work as intended.
-Example try to configure a.options or a.constraints to invalid input file.
+After a.models is generated: now we can modify every file to test if Checker works as intended.
+Example: try to configure a.options or a.constraints to invalid input files.
 
 ## Checker
 To run the binary checkerMain :
