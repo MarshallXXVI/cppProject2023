@@ -1,20 +1,28 @@
 # cppProject2023
+
+## Installation
+To compile :# cppProject2023
 RUN following command.
-To compile :
+
+```bash 
 ~make
+```
+
+## Solver
 To run binary solverMain :
-~make run
+
+```bash
+~make solver
+```
+This will run ./solverMain a.options a.constraints a.models
+
 After generated a.models now can modify every files to test if Checker work as intended.
 Example try to configure a.options or a.constraints to invalid input file.
 
-a.constraints (missing value)
-Prozessor,AMD,RAM,
-Prozessor,AMD,RAM
+## Checker
+To run the binary checkerMain :
 
-a.options (option Bildschirm is not provided)
-Prozessor,AMD,Intel
-RAM,5,6,7,8
-
-
-To run binary checkerMain :
+```bash
 ~make checker
+```
+This will run ./checkerMain a.options a.constraints a.models
