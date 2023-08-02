@@ -39,7 +39,7 @@ public:
   std::vector<std::vector<TupleForConstraints>> getTupleConstraints() { return tupleConstraints; }
   // Main logic for generating modells. Depending on coming UB might
   // have to be adjusted.
-  void generateModells();
+  void generateModells(std::string const &file3);
   
   void handleInputFiles(std::string const &file1, std::string const &file2);
 

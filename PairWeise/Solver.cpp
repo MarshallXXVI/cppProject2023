@@ -18,17 +18,17 @@ void Solver::getDataFromConstraint(std::vector<std::vector<std::string>> param) 
 }
 
 // __________________________________________________________________
-void Solver::generateModells() {
+void Solver::generateModells(std::string const &file3) {
   generateTuple();
-  std::ofstream MyFile1("b.models");
+  std::ofstream MyFile1("temp.models");
   std::vector<Tuple> currentPermutation;
   generatePermutations(tupleOption, currentPermutation, 0, MyFile1);
   MyFile1.close();
-  std::ofstream MyFileCopy("a.models");
-  MyFileCopy << readAndTrimTrailingSpaces("b.models");
+  std::ofstream MyFileCopy(file3);
+  std::string tempString = readAndTrimTrailingSpaces("temp.models");
+  MyFileCopy << tempString;
   MyFileCopy.close();
-  std::filesystem::remove("b.models");
-
+  std::remove("temp.models");
 }
 
 

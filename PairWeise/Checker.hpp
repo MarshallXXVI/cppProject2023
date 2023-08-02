@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 #include "./Solver.hpp"
+#include "./Parse.hpp"
 
 class Checker {
 
@@ -19,6 +20,7 @@ public:
     int errorCode_;
 private:
     Solver s;
+    Parse p;
     std::vector<std::vector<std::string>> optionFile;
     std::vector<std::vector<std::string>> constraintFile;
     std::vector<std::vector<std::string>> modelFile;

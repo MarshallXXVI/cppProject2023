@@ -1,6 +1,4 @@
 #include "./Checker.hpp"
-#include "./Parse.hpp"
-#include "./Solver.hpp"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -10,7 +8,6 @@
 // __________________________________________________________________
 void Checker::readDataInput(const std::string &options,
                   const std::string &constraints) {
-    Parse p;
     p.ReadDataFromFile(options, constraints);
     optionFile = p.getOptions();
     constraintFile = p.getConstraints();
@@ -21,8 +18,8 @@ void Checker::readDataInput(const std::string &options,
 
 // __________________________________________________________________
 void Checker::readDataModel(const std::string &models) {
-    Parse p;
-    modelFile = p.vectorTransform(p.ReturnVectorOfWord(models));
+    std::vector<std::string> tempVec = p.ReturnVectorOfWord(models);
+    modelFile = p.vectorTransform(tempVec);
     setModel();
 }
 
@@ -48,6 +45,10 @@ void Checker::setModel() {
 
 // __________________________________________________________________
 int Checker::ifConditionValid() {
+    if (Model[0].size() == 0) {
+        std::cout << "---------empty file .models---------" << std::endl;
+        return 0;
+    }
     for (int i = 0; i < (int)Model.size(); i++) {
         if (!ifThisCongifurationValid(Model[i])) {
             for (int j = 0; j < (int)Model[i].size(); j++) {
@@ -146,29 +147,15 @@ int Checker::ifConstraintValid() {
     if (count % 2 != 0) {
         return 20;
     }
-    int n = optionFile.size();
-    std::vector<int> tempInt;
-    for (int i = 0; i < n; i++) {
-        tempInt.push_back(0);
-    }
+
     tupleConstraintsCopy = s.getTupleConstraints();
     for (int i = 0; i < (int)tupleConstraintsCopy.size(); i++) {
         for (int j = 0; j < (int)tupleConstraintsCopy[i].size(); j++) {
-            if ((int)tupleConstraintsCopy[i].size() > (int)optionFile.size()) {
-                return 20;
-            }
             TupleForConstraints tempTuples = tupleConstraintsCopy[i][j];
             int tempReturnValue = ifThisTupleOfConstraintValid(tempTuples);
             if (tempReturnValue == -1) {
                 return 20;
-            } else {
-                tempInt[tempReturnValue]++;
             }
-        }
-    }
-    for (int i = 0; i < n; i++) {
-        if (tempInt[i] > 1) {
-            return 20;
         }
     }
     return 0;
@@ -191,12 +178,6 @@ int Checker::ifThisTupleOfConstraintValid(TupleForConstraints param) {
 }
 // __________________________________________________________________
 bool Checker::ifModel() {
-    if (modelFile[0][0] == "") {
-        std::cout << modelFile[0][0];
-        errorCode_ = 40;
-        std::cout << "--------------UNKNOW--------------" << std::endl;
-        return false;
-    }
     errorCode_ = ifConditionValid();
     if (errorCode_ == 0) {
         std::cout << "--------------VERIFIED--------------" << std::endl;
@@ -224,5 +205,3 @@ bool Checker::ifOptionAndConstraints() {
         return false;
     }
 }
-
-

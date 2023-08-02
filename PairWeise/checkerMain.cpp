@@ -17,11 +17,11 @@ int main(int argc, char **argv) {
   std::string constraintsFile = argv[2];
   std::string modelsFile = argv[3];
   c.readDataInput(optionFile, constraintsFile);
+  c.readDataModel(modelsFile);
   if (!c.ifOptionAndConstraints()) {
     return c.errorCode_;
   }
 
-  c.readDataModel(modelsFile);
   if (!c.ifModel()) {
     return c.errorCode_;
   }

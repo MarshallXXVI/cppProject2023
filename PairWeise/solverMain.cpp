@@ -23,5 +23,5 @@ int main(int argc, char **argv) {
   p.PrettyPrinter();
   s.getDataFromOption(p.getOptions());
   s.getDataFromConstraint(p.getConstraints());
-  s.generateModells();
+  s.generateModells(modelsFile);
 }
