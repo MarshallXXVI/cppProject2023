@@ -1,6 +1,30 @@
-Ich habe einen Udemy-Kurs zum Pairwise testing nehmen müssen.
+Wie man sieht, habe ich mich für Variante 3A (Checker) entschieden.
 
+Wie schon für Ü11 erwähnt, ich habe einen Udemy-Kurs zum Pairwise testing nehmen müssen. 
 Als das dann mal geklärt war, konnte ich mich dann auch mal aufs coden
-fokussieren. Sollte alles stimmen soweit.
+fokussieren. 
 
-Lg
+Hoffe die vielen Helper Funktionen sind kein Problem, vielleicht
+manchmal zu verkopft.
+
+Schwierig:
+Ich habe länger noch auf ÜB 12 gewartet, wie in ÜB 11 erwähnt. Dabei kam
+die Frage auf, ob wirklich nur die drei gegebenen Optionen modelliert
+und gecheckt werden müssen oder ob wir ein generellen code schreiben
+müssten - der für jegliche Inputs funktioniere.
+Wie immer fand ich das schwierigste die effektive Aufgabe aus dem Text
+heraus zu verstehen. 
+
+Auch blöd gelaufen: Abgabe ist am 01.08, und bis zum 29.07 habe ich
+immer noch keine Bewertung zu dem ÜB 11 bekommen - das macht die Planung
+der Klassen definitiv nicht einfacher. Durch die Verschiebung der Abgabe
+wurde hier natürlich damit umgangen, trotzdem...
+
+Habe versucht so wenig aber sinnvolle .cpp files zu machen, was das
+debuggen deutlich vereinfacht. Da keine großen Datensätze gefragt sind
+und Effizienz hier nicht im Vordergrund stand, habe ich auch aus zeitlichen 
+Gründen auf den Einsatz von Pointern verzichtet.
+
+
+LG
+Enrico Barbera

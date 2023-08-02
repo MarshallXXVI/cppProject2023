@@ -2,7 +2,7 @@
 
 FUZZER=./crippled-fuzzer
 SOLVER=./solverMain
-# CHECKER=./russian-roulette-checker
+CHECKER=./russian-roulette-checker
 CHECKER=./checkerMain
 
 if [ -x $FUZZER ];
@@ -41,13 +41,26 @@ do
     echo "************* TEST $i    ******************"
     i=$((i+1))
     $FUZZER fuzzer-test.{options,constraints}
+    status=$?
+    if [ "$status" -ne 0 ];
+    then
+	echo "the fuzzer failed on"
+	exit -1;
+    fi;
+
     $SOLVER fuzzer-test.{options,constraints,models}
+    status=$?
+    if [ "$status" -ne 0 ];
+    then
+	echo "the solver failed on fuzzer-test.{options,constraints,models}"
+	exit -1;
+    fi;
+
     $CHECKER fuzzer-test.{options,constraints,models}
     status=$?
-    echo "$status"
     if [ "$status" -ne 40 -a "$status" -ne 0 ];
     then
-	echo "the checking failed on fuzzer-test.{options,constraints,models}"
+	echo "the checker failed on fuzzer-test.{options,constraints,models}"
 	exit -1;
     fi;
 done
