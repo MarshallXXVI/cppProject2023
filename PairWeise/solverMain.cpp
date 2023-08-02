@@ -1,6 +1,6 @@
-#include "./Solver.hpp"
-#include "./Parse.hpp"
 #include "./Checker.hpp"
+#include "./Parse.hpp"
+#include "./Solver.hpp"
 #include <iostream>
 #include <string>
 #include <unistd.h>

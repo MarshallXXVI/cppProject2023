@@ -11,7 +11,7 @@ OBJECTS = $(addsuffix .o, $(basename $(filter-out %Main.cpp %Test.cpp, $(wildcar
 
 all: compile 
 
-run:
+solver:
 	./solverMain a.options a.constraints a.models
 
 checker:
@@ -31,8 +31,6 @@ clean:
 	rm -f *.o
 	rm -f $(MAIN_BINARIES)
 	rm -f $(TEST_BINARIES)
-	rm -f a_Copy.constraints
-	rm -f a_Copy.options
 
 %Main: %Main.o $(OBJECTS)
 	$(CXX) -o $@ $^ $(LIBRARIES)
